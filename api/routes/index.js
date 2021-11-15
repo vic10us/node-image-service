@@ -1,11 +1,10 @@
 'use strict';
-// var todoRoutes = require('./todoListRoutes');
-// var rankRoutes = require('./rankRoutes');
+var lorembarnakRoutes = require('./lorembarnakRoutes');
 var imagesRoutes = require('./imagesRoutes');
 
 module.exports = function(app) {
 
-    // rankRoutes(app);
+    lorembarnakRoutes(app);
     imagesRoutes(app);
 
     app.use(function(req, res) {
