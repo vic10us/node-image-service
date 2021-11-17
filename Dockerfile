@@ -19,4 +19,8 @@ FROM node:14-alpine
 WORKDIR /app
 COPY --from=build /app /app
 EXPOSE 3000
+
+HEALTHCHECK --interval=12s --timeout=12s --start-period=30s \  
+    CMD node healthcheck.js
+
 CMD [ "server.js" ]
