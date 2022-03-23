@@ -2,10 +2,10 @@
 var lorembarnakRoutes = require('./lorembarnakRoutes');
 var imagesRoutes = require('./imagesRoutes');
 
-module.exports = function(app) {
+module.exports.setup = (app) => {
 
-    lorembarnakRoutes(app);
-    imagesRoutes(app);
+    lorembarnakRoutes.setup(app);
+    imagesRoutes.setup(app);
 
     app.use(function(req, res) {
         res.status(404)
