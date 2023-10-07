@@ -123,7 +123,7 @@ const rightAlignText = (context, text, x, y) => {
 
 const drawVoiceXpBar = (canvas, context, percent, color = "#ff0000", xp, xpNext, level) => {
   const x = canvas.width / 2.5;
-  const y = canvas.height - 40;
+  const y = canvas.height - 50;
   const width = canvas.width - x - 20;
   const height = 20;
   context.fillStyle = "#ffffff";
@@ -137,7 +137,7 @@ const drawVoiceXpBar = (canvas, context, percent, color = "#ff0000", xp, xpNext,
 
 const drawXpBar = (canvas, context, percent, color = "#00ff00", xp, xpNext, level) => {
   const x = canvas.width / 2.5;
-  const y = canvas.height - 85;
+  const y = canvas.height - 105;
   const width = canvas.width - x - 20;
   const height = 20;
   context.font = '18px Apple Color Emoji'
@@ -154,6 +154,7 @@ async function generateImage(req, res, next) {
     console.log(req.body);
     var payload = req.body;
     var profileImage = payload.avatarUrl;
+    const cardTitle = payload.cardTitle ?? "Rank Card";
     var textXpPercent = Math.max(0.05, (payload.xpForNextTextLevel > 0) ? payload.textXp / payload.xpForNextTextLevel : 0);
     var voiceXpPercent = Math.max(0.05, (payload.xpForNextVoiceLevel > 0) ? payload.voiceXp / payload.xpForNextVoiceLevel : 0);
     const canvas = createCanvas(700, 250);
@@ -230,21 +231,24 @@ async function generateImage(req, res, next) {
 
     context.font = "28px roboto-regular";
     context.fillStyle = "#ffffff";
-    context.fillText("Rank Card", canvas.width / 2.5, canvas.height / 4);
+    rightAlignText(context, `Rank #${payload.rank}`, canvas.width - 20, 50);
+    context.font = "28px roboto-regular";
+    context.fillStyle = "#ffffff";
+    context.fillText(`${cardTitle}`, canvas.width / 2.5, 50);
 
-    const userName = `${payload.userName}`;
+    let userName = `${payload.userName}`;
     if (payload.userDiscriminator !== undefined && payload.userDiscriminator !== null) {
       userName += `#${payload.userDiscriminator}`;
     }
     context.font = applyText(canvas, userName);
     context.fillStyle = "#ffffff";
-    context.fillText(userName, canvas.width / 2.5, canvas.height / 2);
+    context.fillText(userName, canvas.width / 2.5, (canvas.height / 2) - 20);
 
     context.beginPath();
     context.arc(125, 125, 100, 0, Math.PI * 2, true);
     context.closePath();
     context.clip();
-    
+
     const { body: avatarBody } = await request(
       profileImage ?? "https://cdn.discordapp.com/avatars/1152378737694875699/ececbf9dc78e1d839ed3d4368ccff571.jpg?size=1024"
     );
