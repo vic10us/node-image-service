@@ -33,6 +33,7 @@ const upload = multer({
 
 module.exports.setup = (app) => {
   var controller = require('../controllers/imagesController');
+  var canvasController = require('../controllers/canvasController');
 
   /**
    * @swagger
@@ -68,6 +69,54 @@ module.exports.setup = (app) => {
     .post(
       upload.single('image'),
       controller.convert_svg_image);
+
+   /**
+   * @swagger
+   * /images/rankCard:
+   *   post:
+   *     tags: [Images]
+   *     summary: Generate a rank card
+   *     description: Generate a rank card
+   *     consumes:
+   *       - application/json
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               userName:
+   *                 type: string
+   *                 required: true
+   *               avatarUrl:
+   *                 type: string
+   *                 required: true
+   *               textXp:
+   *                 type: integer
+   *                 required: true
+   *               voiceXp:
+   *                 type: integer
+   *                 required: true
+   *               textLevel:
+   *                 type: integer
+   *                 required: true
+   *               voiceLevel:
+   *                 type: integer
+   *                 required: true
+   *               xpForNextTextLevel:
+   *                 type: integer
+   *                 required: true
+   *               xpForNextVoiceLevel:
+   *                 type: integer
+   *                 required: true
+   *     responses:
+   *       200:
+   *         description: Returns an image in the requested format
+   */
+  app.route('/images/rankCard')
+    .post(
+      canvasController.get_image);
 };
 
 /**
