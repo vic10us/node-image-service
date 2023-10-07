@@ -3,7 +3,7 @@ module.exports = {
     info: {
       title: "vic10us Image Services",
       description: "A set of useful image and misc tools", //  desc.
-      version: "1.0.0", // version number
+      version: "1.1.4", // version number
       contact: {
         name: "vic10us", // your name
         email: "me@vic10.us", // your email
