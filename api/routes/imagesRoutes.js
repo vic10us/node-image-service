@@ -89,8 +89,17 @@ module.exports.setup = (app) => {
    *               userName:
    *                 type: string
    *                 required: true
+   *               cardTitle:
+   *                 type: string
+   *                 required: false
+   *               userDescriminator:
+   *                 type: string
+   *                 required: false
    *               avatarUrl:
    *                 type: string
+   *                 required: true
+   *               rank:
+   *                 type: integer
    *                 required: true
    *               textXp:
    *                 type: integer
