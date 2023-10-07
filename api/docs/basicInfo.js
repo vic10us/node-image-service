@@ -5,9 +5,9 @@ module.exports = {
       description: "A set of useful image and misc tools", //  desc.
       version: "1.0.0", // version number
       contact: {
-        name: "Keith Hill", // your name
-        email: "keith@dexs.ca", // your email
-        url: "dexs.ca", // your website
+        name: "vic10us", // your name
+        email: "me@vic10.us", // your email
+        url: "https://vic10.us", // your website
       },
     },
   };

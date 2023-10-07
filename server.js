@@ -1,5 +1,4 @@
 const express = require('express');
-const {join} = require('path');
 const morgan = require("morgan");
 const cors = require("cors");
 const swaggerUI = require("swagger-ui-express");
