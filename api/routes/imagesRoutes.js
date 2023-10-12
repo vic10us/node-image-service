@@ -122,6 +122,8 @@ module.exports.setup = (app) => {
    *     responses:
    *       200:
    *         description: Returns an image in the requested format
+   *       422:
+   *         description: Returns a validation error if the data does not pass validation
    */
   app.route('/images/rankCard')
     .post(

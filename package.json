@@ -1,6 +1,6 @@
 {
   "name": "image-service",
-  "version": "1.0.0",
+  "version": "1.1.5",
   "description": "Image Service built in NodeJs",
   "main": "server.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-dist": "^4.6.2",
     "swagger-ui-express": "^4.3.0",
-    "undici": "^5.25.4"
+    "undici": "^5.25.4",
+    "validatorjs": "^3.22.1"
   }
 }

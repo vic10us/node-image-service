@@ -27,8 +27,8 @@ const setupSUI = (req, res) => {
     swaggerUI.setup(swaggerSpec);
 };
 
-app.get("/api-docs/swagger.json", (req, res) => res.json(swaggerSpec));
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.get("/swagger/swagger.json", (req, res) => res.json(swaggerSpec));
+app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 const routes = require('./api/routes'); //importing route
 routes.setup(app); //register the route

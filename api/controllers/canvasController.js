@@ -1,4 +1,5 @@
 const { promises } = require("fs");
+const validator = require('../validate');
 const { join } = require("path");
 const {
   GlobalFonts,
@@ -149,14 +150,63 @@ const drawXpBar = (canvas, context, percent, color = "#00ff00", xp, xpNext, leve
   drawProgressBar(context, percent, x, y, height, width, color);
 };
 
+const validationRule = {
+  userName: "required|string",
+  cardTitle: "string",
+  userDiscriminator: "string",
+  avatarUrl: "required|string|url",
+  rank: "required|min:0|max:65535",
+  textXp: "required|min:0",
+  voiceXp: "required|min:0",
+  textLevel: "required|min:0",
+  voiceLevel: "required|min:0",
+  xpForNextTextLevel: "required|min:0",
+  xpForNextVoiceLevel: "required|min:0",
+};
+
+// const validationRule = {
+//   "email": "required|string|email",
+//   "username": "required|string",
+//   "phone": "required|string",
+//   "password": "required|string|min:6|confirmed",
+//   "gender": "string"
+// };
+
 async function generateImage(req, res, next) {
+  await validator(req.body, validationRule, {}, async (err, isSuccess) => {
+    console.log(`Status: ${isSuccess}`);
+    if (!isSuccess) {
+
+      const errorMessages = Object.keys(err).map(key => {
+        const errorMessage = err[key][0];
+        const fieldName = key.charAt(0).toUpperCase() + key.slice(1);
+        return `Error: ${fieldName} (${errorMessage})`;
+      });
+
+      errorMessages.forEach((m) => {
+        console.log(m);
+      });
+
+      res.status(422).send({
+        message: "Validation error",
+        errors: err
+      });
+    } else {
+      await generateImageImpl(req, res, next);
+    }
+  });
+}
+
+async function generateImageImpl(req, res, next) {
   try {
     console.log(req.body);
-    var payload = req.body;
-    var profileImage = payload.avatarUrl;
+    let payload = req.body;
+    
+    // let validation = new Validator(payload, requestRules);
+    let profileImage = payload.avatarUrl;
     const cardTitle = payload.cardTitle ?? "Rank Card";
-    var textXpPercent = Math.max(0.05, (payload.xpForNextTextLevel > 0) ? payload.textXp / payload.xpForNextTextLevel : 0);
-    var voiceXpPercent = Math.max(0.05, (payload.xpForNextVoiceLevel > 0) ? payload.voiceXp / payload.xpForNextVoiceLevel : 0);
+    let textXpPercent = Math.max(0.05, (payload.xpForNextTextLevel > 0) ? payload.textXp / payload.xpForNextTextLevel : 0);
+    let voiceXpPercent = Math.max(0.05, (payload.xpForNextVoiceLevel > 0) ? payload.voiceXp / payload.xpForNextVoiceLevel : 0);
     const canvas = createCanvas(700, 250);
     const context = canvas.getContext("2d");
 
